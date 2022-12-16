@@ -7,29 +7,27 @@ import java.time.Duration;
 
 public class MainApp {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         driver.get("https://www.wikipedia.org");
-        WebElement frenchButton = driver.findElement(By.id("js-link-box-fr"));
 
-        frenchButton.click();
+        // Reccuperation de l'ID de la barre de recherche
+        WebElement searchBox = driver.findElement(By.id("searchInput"));
+        // Mots a saisir dans la barre de recherche
+        String searchStr = "Selenium WebDriver";
+        // Envoie des mots dans la barre de recherche
+        searchBox.sendKeys(searchStr);
 
-        String expectedTitle = "Wikipédia";
-        WebElement titleOfFrenchPage = driver.findElement(By.cssSelector("#accueil_2017_contenu > div.portail-droite > div:nth-child(1) > p:nth-child(2) > a:nth-child(1)"));
+        // Reccuperation du bouton de la barre de recherche
+        WebElement searchButton = driver.findElement(By.cssSelector("#search-form > fieldset > button"));
+       // Click sur le bouton recherche avec comme mots saisi "Selenium WebDriver"
+        searchButton.click();
 
-        if (titleOfFrenchPage.getText().equals(expectedTitle)) {
-            System.out.println("Test has passed! Page is the French one");
-        }
-        else {
-            System.out.println("Test has failed! Click() was not successful.");
-        }
-
-
-        driver.close();
+//        driver.close();
 
     }
 }
