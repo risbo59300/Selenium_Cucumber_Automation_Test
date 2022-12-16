@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
+import java.util.List;
 
 public class MainApp {
 
@@ -13,21 +14,21 @@ public class MainApp {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.get("https://www.wikipedia.org");
+        driver.get("file:///C:/Users/FZSM8022/Desktop/table.html");
 
-        // Reccuperation de l'ID de la barre de recherche
-        WebElement searchBox = driver.findElement(By.id("searchInput"));
-        // Mots a saisir dans la barre de recherche
-        String searchStr = "Selenium WebDriver";
-        // Envoie des mots dans la barre de recherche
-        searchBox.sendKeys(searchStr);
+        // Reccuperation du premier element de la table se trouvant à la ligne 2 et colonne 1
+        System.out.println(driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]")).getText());
+        // Reccuperation de l'entête de la table se trouvant à la ligne 1 et colonne 2
+        System.out.println(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[2]")).getText());
 
-        // Reccuperation du bouton de la barre de recherche
-        WebElement searchButton = driver.findElement(By.cssSelector("#search-form > fieldset > button"));
-       // Click sur le bouton recherche avec comme mots saisi "Selenium WebDriver"
-        searchButton.click();
+        // Reccuperation des éléments de toutes les lignes
+        List<WebElement> listOfWebElements = driver.findElements(By.xpath("/html/body/table/tbody/tr"));
 
-//        driver.close();
+        for (WebElement element: listOfWebElements) {
+            System.out.println(element.getText());
+        }
+
+        driver.close();
 
     }
 }
