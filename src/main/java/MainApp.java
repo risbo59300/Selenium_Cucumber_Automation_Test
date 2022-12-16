@@ -1,16 +1,10 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 public class MainApp {
 
@@ -19,35 +13,30 @@ public class MainApp {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        // Implicit Wait
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://www.wikipedia.org/");
         driver.manage().window().maximize();
+        driver.get("https://www.udemy.com/course/core-java-programming-language-tutorial/");
 
-        // Reccuperation du titre de la page
-        System.out.println(driver.getTitle());
-        //Reccuperation de l'URL du site
-        System.out.println(driver.getCurrentUrl());
+        // Réccuperation du bouton s'inscrire
+        WebElement signUpButton = driver.findElement(By.cssSelector("#fr > div.ud-main-content-wrapper > div.ud-app-loader.ud-component--header-v6--header.ud-header.ud-app-loaded > div.ud-text-sm.header--header--1SLKV.header--flex-middle--2QeVR > div:nth-child(9) > a"));
 
-        //Explicit Wait
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("js-link-box-fr"))));
+        // Execution du script qui permet de cliquer sur le bouton "s'inscrire" et ouverture de la page d'inscription
+//        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", signUpButton);
 
-        //Fluent Wait
-        Wait fluentWait = new FluentWait(driver)
-            .withTimeout(Duration.ofSeconds(15))
-            .pollingEvery(Duration.ofSeconds(5))
-            .ignoring(NoSuchElementException.class);
+        //Setting up timeouts
+        ((JavascriptExecutor) driver).executeAsyncScript("window.setTimeout(arguments[arguments.length-1], 1000);");
 
-        fluentWait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-               return driver.findElement(By.id("js-link-box-fr"));
-            }
-        });
+        // changement de site web et acces au site web de wikipedia
+//        ((JavascriptExecutor) driver).executeScript("window.location = 'https://wikipedia.com'");
 
-        driver.close();
+        //Scrolling de la page web
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 1000)");
+
+//        driver.close();
+
+
+
+
+
 
     }
 }
