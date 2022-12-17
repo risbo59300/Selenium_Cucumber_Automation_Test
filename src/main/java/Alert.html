@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>table</title>
+</head>
+<body>
+    <p>Click the button to display a basic alert.</p>
+    <button onclick="myFunction()">Display Alert</button>
+    <script>
+      function myFunction() {
+        alert("Hello I am an alert box!")
+      }
+    </script>
+    <p>Click the button to display a confirmation alert.</p>
+    <button onclick="confirmationAlert()">Confirmation Alert</button>
+    <script>
+      function confirmationAlert() {
+        confirm("Press a button!")
+      }
+    </script>
+     <p>Click the button to demonstrate a prompt alert.</p>
+     <button onclick="promptAlert()">Prompt Alert</button>
+     <p id="demo"></p>
+     <script>
+       function promptAlert() {
+         let name = prompt("Please enter your name");
+
+         if (name == null || name == "") {
+          document.getElementById("demo").innerHTML = "You didn't enter a name"
+         } else {
+          document.getElementById("demo").innerHTML = "Hello " + name + "! How are you today?";
+         }
+       }
+     </script>
+
+</body>
+</html>

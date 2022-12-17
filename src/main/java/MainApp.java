@@ -1,8 +1,10 @@
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -14,22 +16,49 @@ public class MainApp {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.get("https://www.udemy.com/course/core-java-programming-language-tutorial/");
+        driver.get("file:///C:/Users/FZSM8022/Desktop/Alert.html");
 
-        // Réccuperation du bouton s'inscrire
-        WebElement signUpButton = driver.findElement(By.cssSelector("#fr > div.ud-main-content-wrapper > div.ud-app-loader.ud-component--header-v6--header.ud-header.ud-app-loaded > div.ud-text-sm.header--header--1SLKV.header--flex-middle--2QeVR > div:nth-child(9) > a"));
+        WebElement basicAlertButton = driver.findElement(By.cssSelector("body > button:nth-child(2)"));
+        WebElement confirmationAlertButton = driver.findElement(By.cssSelector("body > button:nth-child(5)"));
+        WebElement promptAlertButton = driver.findElement(By.cssSelector("body > button:nth-child(8)"));
 
-        // Execution du script qui permet de cliquer sur le bouton "s'inscrire" et ouverture de la page d'inscription
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", signUpButton);
+        basicAlertButton.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert basicAlert = driver.switchTo().alert();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        //Setting up timeouts
-        ((JavascriptExecutor) driver).executeAsyncScript("window.setTimeout(arguments[arguments.length-1], 1000);");
+        basicAlert.accept();
 
-        // changement de site web et acces au site web de wikipedia
-//        ((JavascriptExecutor) driver).executeScript("window.location = 'https://wikipedia.com'");
+        confirmationAlertButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert confirmationAlert = driver.switchTo().alert();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        //Scrolling de la page web
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 1000)");
+        confirmationAlert.dismiss();
+
+        promptAlertButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert promptAlert = driver.switchTo().alert();
+        System.out.println(promptAlert.getText());
+
+        promptAlert.sendKeys("Yves Boris");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        promptAlert.accept();
 
 //        driver.close();
 
