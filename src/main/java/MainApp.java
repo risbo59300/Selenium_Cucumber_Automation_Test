@@ -1,10 +1,7 @@
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -16,49 +13,16 @@ public class MainApp {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.get("file:///C:/Users/FZSM8022/Desktop/Alert.html");
+        driver.get("https://www.w3schools.com/html/html_iframe.asp");
 
-        WebElement basicAlertButton = driver.findElement(By.cssSelector("body > button:nth-child(2)"));
-        WebElement confirmationAlertButton = driver.findElement(By.cssSelector("body > button:nth-child(5)"));
-        WebElement promptAlertButton = driver.findElement(By.cssSelector("body > button:nth-child(8)"));
+//        String title = driver.switchTo().frame(0).findElement(By.cssSelector("#main > h1")).getText();
+//        System.out.println(title);
 
-        basicAlertButton.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert basicAlert = driver.switchTo().alert();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        WebElement iframe = driver.findElement(By.cssSelector("#main > div:nth-child(7) > iframe"));
 
-        basicAlert.accept();
+        driver.switchTo().frame(iframe).findElement(By.cssSelector("#topnav > div > div.w3-bar.w3-left > a:nth-child(5)")).click();
 
-        confirmationAlertButton.click();
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert confirmationAlert = driver.switchTo().alert();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        confirmationAlert.dismiss();
-
-        promptAlertButton.click();
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert promptAlert = driver.switchTo().alert();
-        System.out.println(promptAlert.getText());
-
-        promptAlert.sendKeys("Yves Boris");
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        promptAlert.accept();
 
 //        driver.close();
 
